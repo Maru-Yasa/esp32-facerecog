@@ -5,19 +5,15 @@
 #include <esp_int_wdt.h>
 #include <esp_task_wdt.h>
 
-// Replace with your network credentials
-const char* ssid = "ivorya 2";
-const char* password = "wildflower17";
-
 // Camera configuration
 camera_config_t config;
 AsyncWebServer server(80); // Create an AsyncWebServer on port 80
 
 void startHttpServer();
 
-void initWifi(const char * ssid, const char * password){
+void initWifi(){
   // Connect to Wi-Fi
-  WiFi.begin(ssid, password);
+  WiFi.begin(String(WIFI_SSID), String(WIFI_PASSWORD));
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
     Serial.println("Connecting to WiFi...");
@@ -85,7 +81,7 @@ void setup() {
   initCamera();
 
   // Connect to Wi-Fi
-  initWifi(ssid, password);
+  initWifi();
   
   // Start the camera server
   startHttpServer();
